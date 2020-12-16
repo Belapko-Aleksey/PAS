@@ -1,0 +1,85 @@
+```plantuml
+@startuml ClassDiagram
+
+abstract class model
+class Payment {
+  -email: string
+  -link: string
+}
+class Report{
+  -id: number
+  -email: string
+  -message: string
+}
+
+model <|-- Report
+model <|-- Payment
+
+PaymentSystem <|.. QIWI
+PaymentSystem <|.. WebMoney
+PaymentSystem <|.. YandexMoney
+
+class ReportService{
+  -newsRepository: Report
+  +findAll()
+  +findLatest(timestamp)
+  +findFavorites(user_id: number)
+}
+
+Report *-- ReportService
+
+class PaymentService{
+  -paymentRepository: Payment
+  +findAll()
+  +findOneById(id: number)
+  +create(user: PaymentDto)
+  +validate(user: LoginFormDto)
+  +findOneByLink(link: string)
+}
+
+Payment *-- PaymentService
+
+class ReportController{
+  -reportService: ReportService
+  +getReport(): Get()
+}
+
+ReportService *-- ReportController
+
+class PayController{
+  -paymentService: PaymentService
+  +login(user: LoginFormDto): Post()
+  +create(user: PaymentDto): Post()
+}
+
+PayController -down-* PaymentService
+
+class Database{
+  -{static} instance: Database
+  -Database()
+  +{static} getInstance(): Database
+  + query(sql: string)
+}
+
+interface PaymentSystem{
+    +generateLink(params: json)
+    +getPayInfo(params: json): Payment
+}
+
+class QIWI{
+    +generateLink(params: json)
+    +getPayInfo(params: json): Payment
+}
+
+class WebMoney{
+    +generateLink(params: json)
+    +getPayInfo(params: json): Payment
+}
+
+class YandexMoney{
+    +generateLink(params: json)
+    +getPayInfo(params: json): Payment
+}
+
+@enduml
+```

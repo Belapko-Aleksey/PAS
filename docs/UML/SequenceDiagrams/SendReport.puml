@@ -1,0 +1,43 @@
+```plantuml
+@startuml Send Report
+
+hide footbox
+
+actor User
+User -> "Report page" as UI: ReportButton
+activate UI
+
+UI -> ReportController: << POST >>
+activate ReportController
+
+ReportController -> ReportService: create(email,message)
+activate ReportService
+deactivate ReportController
+
+par
+ReportService -> ReportService: sendToMail
+else
+activate ReportService
+deactivate ReportService
+database Database
+ReportService -> ReportService: CreateUser
+activate ReportService
+ReportService -> Database: addNewUser
+activate Database
+ReportService <-- Database: NewUserInstance
+deactivate Database
+end
+
+deactivate ReportService
+ReportService --> ReportController: returnNewReportInstance
+deactivate ReportService
+
+activate ReportController
+ReportController --> UI : Registered
+deactivate ReportController
+
+UI --> User: Success(Reported)
+deactivate UI
+
+@enduml
+```

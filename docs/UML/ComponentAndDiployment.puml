@@ -1,0 +1,17 @@
+```plantuml
+@startuml Component&Diployment
+node server{
+  component "WebServer"{
+    [REST] .> HTTP : use
+  }
+  database "MySQL"{
+    [data] -up- REST
+  }
+  [LocalData] - REST
+}
+
+component "Web browser"{
+  [Payment page] .right.> HTTP: use
+}
+@enduml
+```

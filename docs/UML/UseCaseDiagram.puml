@@ -1,0 +1,25 @@
+```plantuml
+@startuml Use Case diagramm
+
+left to right direction
+
+actor Authentification 
+Authentification << service >>
+actor PaymentSystems 
+PaymentSystems << service >>
+
+package ApplicationUseCases {
+  usecase "Admin panel" as adminPanel
+  usecase "Payment page" as paymentPage
+  usecase "Report" as report
+}
+
+adminPanel -- Authentification
+paymentPage -- PaymentSystems
+Administrator -> adminPanel
+User --> paymentPage
+User --> report
+
+@enduml
+```
+####

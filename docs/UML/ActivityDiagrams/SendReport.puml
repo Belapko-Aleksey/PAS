@@ -1,0 +1,15 @@
+  ```plantuml
+@startuml SendReport
+
+(*) --> "Recieve Report"
+--> ===B1===
+--> "Send Report to mail"
+--> ===B2===
+
+===B1=== -right-> "Save to BD"
+--> ===B2===
+
+--> (*)
+
+@enduml
+```

@@ -1,0 +1,57 @@
+```plantuml
+@startuml Create Payment
+
+hide footbox
+
+
+actor User
+User -> "Payment page : UI" as UI: Create Payment Button
+activate UI
+
+UI -> PayController: << POST >>
+activate PayController
+
+PayController -> PaymentsService: create(email, requisites[])
+activate PaymentsService
+deactivate PayController
+
+
+PaymentsService -> PaymentSystemAPI: generateLink(requisites[])
+activate PaymentSystemAPI
+PaymentsService <-- PaymentSystemAPI: response
+deactivate PaymentSystemAPI
+deactivate PaymentsService
+
+alt success == false
+
+PaymentsService --> PayController: Error
+activate PayController
+PayController --> UI : Error
+deactivate PayController
+UI --> User: Error(Error) 
+
+else success == true
+
+database Database
+PaymentsService -> PaymentsService: CreatePayment
+activate PaymentsService
+PaymentsService -> Database: addNewPayment
+activate Database
+PaymentsService <-- Database: NewPaymentInstance
+deactivate Database
+
+deactivate PaymentsService
+PaymentsService --> PayController: returnNewPaymentInstance
+deactivate PaymentsService
+
+activate PayController
+PayController --> UI : Created
+deactivate PayController
+
+UI --> User: Redirect(link)
+deactivate UI
+
+end
+
+@enduml
+```

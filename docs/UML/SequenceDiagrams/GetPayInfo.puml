@@ -1,0 +1,54 @@
+```plantuml
+@startuml GetPayInfo
+
+hide footbox
+
+actor User
+User -> "Payment page : UI" as UI: GetPayScript
+activate UI
+
+UI -> PayController: << POST >>
+activate PayController
+
+PayController -> PaymentsService: get(email,link)
+activate PaymentsService
+deactivate PayController
+
+
+PaymentsService -> PaymentsService: checkExists
+activate PaymentsService
+deactivate PaymentsService
+
+alt exist == false
+
+PaymentsService --> PayController: NotFound
+activate PayController
+PayController --> UI : NotFound
+deactivate PayController
+UI --> User: Error(NotFound) 
+
+else exist == true
+
+database Database
+PaymentsService -> PaymentsService: GetPayment
+activate PaymentsService
+PaymentsService -> Database: getPayment
+activate Database
+PaymentsService <-- Database: PaymentInstance
+deactivate Database
+
+deactivate PaymentsService
+PaymentsService --> PayController: returnPaymentInstance
+deactivate PaymentsService
+
+activate PayController
+PayController --> UI : PaymentInfo
+deactivate PayController
+
+UI --> User: Success(Details)
+deactivate UI
+
+end
+
+@enduml
+```

@@ -1,0 +1,14 @@
+  ```plantuml
+@startuml CreatePayment
+
+(*) --> "Recieve Payment details"
+--> "Payment validation"
+if "Is valid" then
+  -->[false] (*)
+else
+  -->[true] "Payment confirmation"
+  -->[Ending process] (*)
+endif
+
+@enduml
+```

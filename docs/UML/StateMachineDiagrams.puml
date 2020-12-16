@@ -1,0 +1,25 @@
+```plantuml
+@startuml 
+scale 600 width
+
+[*] --> Configuration : Create New Payment
+Configuration: # Choose amount
+Configuration: # Enter email
+Configuration: # Enter requisites
+Configuration -right-> API : Request Payment
+Configuration --> Cancelled : Cancel
+API --> Created : Succeeded / Save Result
+API --> Failed : Aborted
+state API {
+  state "Validate Payment" as trans
+  trans : Just a test
+  [*] --> trans
+  trans --> trans : Check requisites
+  trans --> Confirm : Valid requisites
+}
+Created --> [*]
+Cancelled --> [*]
+Failed --> [*]
+
+@enduml
+```

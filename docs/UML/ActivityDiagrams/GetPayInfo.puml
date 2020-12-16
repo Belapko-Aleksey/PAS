@@ -1,0 +1,10 @@
+  ```plantuml
+@startuml GetPayInfo
+
+(*) --> "Recieve Params"
+--> "Request to BD"
+--> "Return result"
+--> (*)
+
+@enduml
+```

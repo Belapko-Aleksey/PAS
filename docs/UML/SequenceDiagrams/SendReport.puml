@@ -20,11 +20,11 @@ else
 activate ReportService
 deactivate ReportService
 database Database
-ReportService -> ReportService: CreateUser
+ReportService -> ReportService: CreateReport
 activate ReportService
-ReportService -> Database: addNewUser
+ReportService -> Database: addNewReport
 activate Database
-ReportService <-- Database: NewUserInstance
+ReportService <-- Database: NewReportInstance
 deactivate Database
 end
 

@@ -1,0 +1,1 @@
+<img src="/img/logos/PAS.png" alt="Logo">

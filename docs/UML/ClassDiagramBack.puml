@@ -23,7 +23,7 @@ class ReportService{
   -newsRepository: Report
   +findAll()
   +findLatest(timestamp)
-  +findFavorites(user_id: number)
+  +findFavorites(report_id: number)
 }
 
 Report *-- ReportService
@@ -32,8 +32,8 @@ class PaymentService{
   -paymentRepository: Payment
   +findAll()
   +findOneById(id: number)
-  +create(user: PaymentDto)
-  +validate(user: LoginFormDto)
+  +create(payment: Payment)
+  +validate(payment: Payment)
   +findOneByLink(link: string)
 }
 
@@ -48,8 +48,8 @@ ReportService *-- ReportController
 
 class PayController{
   -paymentService: PaymentService
-  +login(user: LoginFormDto): Post()
-  +create(user: PaymentDto): Post()
+  +pay(payment: Payment): Post()
+  +create(payment: Payment): Post()
 }
 
 PayController -down-* PaymentService
